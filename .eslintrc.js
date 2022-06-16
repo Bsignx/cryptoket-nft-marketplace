@@ -18,6 +18,7 @@ module.exports = {
     'no-nested-ternary': 0,
     'consistent-return': 0,
     'no-alert': 0,
+    'react/jsx-wrap-multilines': 0,
     'react/jsx-no-constructed-context-values': 0,
     'import/extensions': 0,
     'react/prop-types': 0,
