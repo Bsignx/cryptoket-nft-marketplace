@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-// import { create as ipfsHttpClient } from 'ipfs-http-client';
+import { create as ipfsHttpClient } from 'ipfs-http-client';
 // import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
@@ -9,21 +9,21 @@ import { useTheme } from 'next-themes';
 import { Button, Input } from '../components';
 import images from '../assets';
 
-// const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
+const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
 
 const CreateItem = () => {
   //   const { createSale, isLoadingNFT } = useContext(NFTContext);
   const [fileUrl, setFileUrl] = useState(null);
   const { theme } = useTheme();
 
-  const uploadToInfura = async () => {
-    // try {
-    //   const added = await client.add({ content: file });
-    //   const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-    //   setFileUrl(url);
-    // } catch (error) {
-    //   console.log('Error uploading file: ', error);
-    // }
+  const uploadToInfura = async (file) => {
+    try {
+      const added = await client.add({ content: file });
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      setFileUrl(url);
+    } catch (error) {
+      console.log('Error uploading file: ', error);
+    }
   };
 
   const onDrop = useCallback(async (acceptedFile) => {
