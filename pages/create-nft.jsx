@@ -1,18 +1,18 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useContext } from 'react';
 import { create as ipfsHttpClient } from 'ipfs-http-client';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
-// import { NFTContext } from '../context/NFTContext';
+import { NFTContext } from '../context/NFTContext';
 import { Button, Input } from '../components';
 import images from '../assets';
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
 
 const CreateItem = () => {
-  //   const { createSale, isLoadingNFT } = useContext(NFTContext);
+  const { createSale, isLoadingNFT } = useContext(NFTContext);
   const [fileUrl, setFileUrl] = useState(null);
   const { theme } = useTheme();
 
@@ -49,7 +49,7 @@ const CreateItem = () => {
        ${isDragActive ? ' border-file-active ' : ''} 
        ${isDragAccept ? ' border-file-accept ' : ''} 
        ${isDragReject ? ' border-file-reject ' : ''}`,
-    [isDragActive, isDragReject, isDragAccept]
+    [isDragActive, isDragReject, isDragAccept],
   );
 
   const [formInput, updateFormInput] = useState({
@@ -57,22 +57,22 @@ const CreateItem = () => {
     name: '',
     description: '',
   });
-  //   const router = useRouter();
+  const router = useRouter();
 
   const createMarket = async () => {
-    // const { name, description, price } = formInput;
-    // if (!name || !description || !price || !fileUrl) return;
-    // /* first, upload to IPFS */
-    // const data = JSON.stringify({ name, description, image: fileUrl });
-    // try {
-    //   const added = await client.add(data);
-    //   const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-    //   /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
-    //   await createSale(url, formInput.price);
-    //   router.push('/');
-    // } catch (error) {
-    //   console.log('Error uploading file: ', error);
-    // }
+    const { name, description, price } = formInput;
+    if (!name || !description || !price || !fileUrl) return;
+    /* first, upload to IPFS */
+    const data = JSON.stringify({ name, description, image: fileUrl });
+    try {
+      const added = await client.add(data);
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
+      await createSale(url, formInput.price);
+      router.push('/');
+    } catch (error) {
+      console.log('Error uploading file: ', error);
+    }
   };
 
   //   if (isLoadingNFT) {
