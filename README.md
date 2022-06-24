@@ -1,15 +1,40 @@
-# Basic Sample Hardhat Project
+<h1 align="center">
+  CryptoKet - NFT Marketplace
+</h1>
+<p align="center">
+  Using Web 3.0, Solidity and Metamask methodologies, an NFT Marketplace was built.
+</p>
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+![NFT Marketplace](https://i.ibb.co/K2FjvH3/Home.png)
 
-Try running some of the following tasks:
+## 🛠 Installation & Set Up
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+1. Install and use the correct version of Node using [NVM](https://github.com/nvm-sh/nvm)
+
+   ```sh
+   nvm install
+   ```
+
+2. Install dependencies
+
+   ```sh
+   yarn
+   ```
+
+3. Start the development server
+
+   ```sh
+   yarn dev
+   ```
+
+4. Start Hardhat commands and connect to the Ethereum network using metamask on testnet.
+
+   ```sh
+   npx hardhat node
+   ```
+
+   and
+
+   ```sh
+   npx hardhat run scripts/deploy.js —network localhost
+   ```
