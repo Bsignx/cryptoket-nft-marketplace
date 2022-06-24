@@ -2,7 +2,7 @@
   CryptoKet - NFT Marketplace
 </h1>
 <p align="center">
-  Using Web 3.0, Solidity and Metamask methodologies, an NFT Marketplace was built.
+  Using Web 3.0, Next JS, Tailwnd, Solidity and Metamask methodologies, an NFT Marketplace was built.
 </p>
 
 ![NFT Marketplace](https://i.ibb.co/K2FjvH3/Home.png)
