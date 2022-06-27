@@ -155,7 +155,7 @@ const AssetDetails = () => {
         />
       )}
 
-      {/* {isLoadingNFT && (
+      {isLoadingNFT && (
         <Modal
           header="Buying NFT..."
           body={(
@@ -192,7 +192,7 @@ const AssetDetails = () => {
           )}
           handleClose={() => setSuccessModal(false)}
         />
-      )} */}
+      )}
     </div>
   );
 };
