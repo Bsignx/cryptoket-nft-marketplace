@@ -6,7 +6,7 @@ import images from '../assets';
 
 import { makeid } from '../utils/makeId';
 
-import { Banner, CreatorCard, NFTCard } from '../components';
+import { Banner, CreatorCard, NFTCard, SearchBar } from '../components';
 import { NFTContext } from '../context/NFTContext';
 import { getCreators } from '../utils/getTopCreators';
 import { shortenAddress } from '../utils/shortenAddress';
@@ -15,6 +15,9 @@ const Home = () => {
   const { fetchNFTs } = useContext(NFTContext);
 
   const [nfts, setNfts] = useState([]);
+  const [nftsCopy, setNftsCopy] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeSelect, setActiveSelect] = useState('Recently Added');
   const [hideButtons, setHideButtons] = useState(false);
 
   const scrollRef = useRef(null);
@@ -26,8 +29,45 @@ const Home = () => {
     fetchNFTs()
       .then((items) => {
         setNfts(items.reverse());
+        setNftsCopy(items);
+        setIsLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    const sortedNfts = [...nfts];
+
+    switch (activeSelect) {
+      case 'Price (low to high)':
+        setNfts(sortedNfts.sort((a, b) => a.price - b.price));
+        break;
+      case 'Price (high to low)':
+        setNfts(sortedNfts.sort((a, b) => b.price - a.price));
+        break;
+      case 'Recently added':
+        setNfts(sortedNfts.sort((a, b) => b.tokenId - a.tokenId));
+        break;
+      default:
+        setNfts(nfts);
+        break;
+    }
+  }, [activeSelect]);
+
+  const onHandleSearch = (value) => {
+    const filteredNfts = nfts.filter(({ name }) => name.toLowerCase().includes(value.toLowerCase()));
+
+    if (filteredNfts.length === 0) {
+      setNfts(nftsCopy);
+    } else {
+      setNfts(filteredNfts);
+    }
+  };
+
+  const onClearSearch = () => {
+    if (nfts.length && nftsCopy.length) {
+      setNfts(nftsCopy);
+    }
+  };
 
   const handleScroll = (direction) => {
     const { current } = scrollRef;
@@ -62,7 +102,7 @@ const Home = () => {
     };
   });
 
-  const creators = getCreators(nfts);
+  const creators = getCreators(nftsCopy);
 
   return (
     <div className="flex justify-center sm:px-4 p-12">
@@ -96,7 +136,7 @@ const Home = () => {
                   creatorEths={creator.sumall}
                 />
               ))}
-              {[6, 7, 8, 9, 10].map((i) => (
+              {/* {[6, 7, 8, 9, 10].map((i) => (
                 <CreatorCard
                   key={`creator-${i}`}
                   rank={i}
@@ -104,7 +144,7 @@ const Home = () => {
                   creatorName={`0x${makeid(3)}...${makeid(4)}`}
                   creatorEths={10 - i * 0.534}
                 />
-              ))}
+              ))} */}
               {!hideButtons && (
                 <>
                   <div
@@ -147,7 +187,9 @@ const Home = () => {
               Hot Bids
             </h1>
 
-            <div>SearchBar</div>
+            <div className="flex-2 sm:w-full flex flex-row sm:flex-col">
+              <SearchBar activeSelect={activeSelect} setActiveSelect={setActiveSelect} handleSearch={onHandleSearch} clearSearch={onClearSearch} />
+            </div>
           </div>
           <div className="mt-3 w-full flex flex-wrap justify-start md:justify-center">
             {nfts.map((nft) => <NFTCard key={nft.tokenId} nft={nft} />)}
