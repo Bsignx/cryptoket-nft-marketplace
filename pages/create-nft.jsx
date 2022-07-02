@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
 import { NFTContext } from '../context/NFTContext';
-import { Button, Input } from '../components';
+import { Button, Input, Loader } from '../components';
 import images from '../assets';
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0');
@@ -75,13 +75,13 @@ const CreateItem = () => {
     }
   };
 
-  //   if (isLoadingNFT) {
-  //     return (
-  //       <div className="flexCenter" style={{ height: '51vh' }}>
-  //         <Loader />
-  //       </div>
-  //     );
-  //   }
+  if (isLoadingNFT) {
+    return (
+      <div className="flexCenter" style={{ height: '51vh' }}>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center sm:px-4 p-12">

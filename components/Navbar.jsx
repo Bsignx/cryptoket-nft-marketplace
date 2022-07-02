@@ -24,9 +24,8 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
 
   return (
     <ul
-      className={`list-none flexCenter flex-row ${
-        isMobile && 'flex-col h-full'
-      }`}
+      className={`list-none flexCenter flex-row ${isMobile && 'flex-col h-full'
+        }`}
     >
       {['Explore NFTs', 'Listed NFTs', 'My NFTs'].map((item, i) => (
         <li
@@ -37,11 +36,10 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
             if (isMobile) setIsOpen(false);
           }}
           className={`flex flex-row items-center font-poppins font-semibold text-base dark:hover:text-white hover:text-nft-dark mx-3
-          ${
-            active === item
+          ${active === item
               ? 'dark:text-white text-nft-black-1'
               : 'dark:text-nft-gray-3 text-nft-gray-2'
-          } 
+            } 
           ${isMobile && 'my-5 text-xl'}`}
         >
           <Link href={generateLink(i)}>{item}</Link>
@@ -51,7 +49,7 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
   );
 };
 
-const ButtonGroup = ({ setActive, router }) => {
+const ButtonGroup = ({ setActive, router, setIsOpen }) => {
   const { connectWallet, currentAccount } = useContext(NFTContext);
 
   return currentAccount ? (
@@ -62,6 +60,7 @@ const ButtonGroup = ({ setActive, router }) => {
         classStyles="mx-2 rounded-xl"
         handleClick={() => {
           setActive('');
+          if (setIsOpen) setIsOpen(false);
           router.push('/create-nft');
         }}
       />
@@ -219,7 +218,7 @@ const Navbar = () => {
               />
             </div>
             <div className="p-4 border-t dark:border-nft-black-1 border-nft-gray-1">
-              <ButtonGroup setActive={setActive} router={router} />
+              <ButtonGroup setActive={setActive} router={router} setIsOpen={setIsOpen} />
             </div>
           </div>
         )}
