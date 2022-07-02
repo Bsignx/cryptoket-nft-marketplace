@@ -5,7 +5,7 @@
   Using Web 3.0, Next JS, Tailwnd, Solidity and Metamask methodologies, an NFT Marketplace was built.
 </p>
 
-![NFT Marketplace](https://i.ibb.co/K2FjvH3/Home.png)
+![NFT Marketplace](https://res.cloudinary.com/my-portfoiio/image/upload/v1656721093/others/Screenshot_3_skgeng.png)
 
 ## 🛠 Installation & Set Up
 
